@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Form({ onAddItems }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const previousValue = useRef(null);
+
+  useEffect(() => {
+    previousValue.current = description;
+  }, [description]);
+
+  // const prevCountRef = usePrevious(null);
+
+  // useEffect(() => {
+  //   console.log(prevCountRef, description);
+  // }, [prevCountRef, description]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!description) return;
+    if (!description) return alert("Enter at least one item!");
 
     const newItem = { description, quantity, packed: false, id: Date.now() };
 
@@ -19,6 +30,9 @@ export default function Form({ onAddItems }) {
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
+      <h6>
+        Prev Value: {previousValue.current} {"    "} Currnt Value:{description}
+      </h6>
       <h3>What do you need for your 😍 trip?</h3>
       <select
         value={quantity}

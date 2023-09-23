@@ -8,6 +8,8 @@ export default function App() {
   const [items, setItems] = useState([]);
 
   function handleAddItems(item) {
+    console.log(item, "ITEMS");
+    console.log(items[items.length - 1]?.description, "haah");
     setItems((items) => [...items, item]);
   }
 
