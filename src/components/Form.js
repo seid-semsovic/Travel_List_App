@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
-export default function Form({ onAddItems }) {
+export default function Form({ onAddItems, items}) { // iz App-a kao propse saljem sve Iteme..
+  
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
   const previousValue = useRef(null);
@@ -20,6 +21,12 @@ export default function Form({ onAddItems }) {
 
     if (!description) return alert("Enter at least one item!");
 
+
+		if (items.some((item) => item.description === description)) {
+			alert("This item is already in the list.");
+			return;
+    } // onda ovde proveravam da li postoji item sa takvim nazivom
+  
     const newItem = { description, quantity, packed: false, id: Date.now() };
 
     onAddItems(newItem);
