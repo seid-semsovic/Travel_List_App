@@ -37,9 +37,7 @@ export default function Form({ onAddItems, items}) { // iz App-a kao propse salj
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
-      <h6>
-        Prev Value: {previousValue.current} {"    "} Currnt Value:{description}
-      </h6>
+ 
       <h3>What do you need for your 😍 trip?</h3>
       <select
         value={quantity}
