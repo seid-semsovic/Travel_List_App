@@ -6,6 +6,7 @@ export default function PackingList({
   onDeleteItem,
   onToggleItem,
   onClearList,
+  sumItems,
 }) {
   const [sortBy, setSortBy] = useState("input");
 
@@ -40,6 +41,8 @@ export default function PackingList({
           <option value="packed">Sort by packed status</option>
         </select>
         <button onClick={onClearList}>Clear List</button>
+
+        <p style={{ paddingTop: "25px" }}>Number of items:{sumItems}</p>
       </div>
     </div>
   );

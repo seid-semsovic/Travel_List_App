@@ -1,32 +1,25 @@
 import { useState, useRef, useEffect } from "react";
 
-export default function Form({ onAddItems, items}) { // iz App-a kao propse saljem sve Iteme..
-  
+export default function Form({ onAddItems, items }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
   const previousValue = useRef(null);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     previousValue.current = description;
   }, [description]);
-
-  // const prevCountRef = usePrevious(null);
-
-  // useEffect(() => {
-  //   console.log(prevCountRef, description);
-  // }, [prevCountRef, description]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     if (!description) return alert("Enter at least one item!");
 
-
-		if (items.some((item) => item.description === description)) {
-			alert("This item is already in the list.");
-			return;
+    if (items.some((item) => item.description === description)) {
+      alert("This item is already in the list.");
+      return;
     } // onda ovde proveravam da li postoji item sa takvim nazivom
-  
+
     const newItem = { description, quantity, packed: false, id: Date.now() };
 
     onAddItems(newItem);
@@ -37,9 +30,6 @@ export default function Form({ onAddItems, items}) { // iz App-a kao propse salj
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
-      <h6>
-        Prev Value: {previousValue.current} {"    "} Currnt Value:{description}
-      </h6>
       <h3>What do you need for your 😍 trip?</h3>
       <select
         value={quantity}
@@ -56,8 +46,20 @@ export default function Form({ onAddItems, items}) { // iz App-a kao propse salj
         placeholder="Item..."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        disabled={isDisabled}
+        style={{ backgroundColor: isDisabled ? "grey" : "" }}
       />
-      <button>Add</button>
+      <button
+        disabled={isDisabled}
+        style={{ backgroundColor: isDisabled ? "grey" : "" }}
+      >
+        Add
+      </button>
+      <input
+        type="checkbox"
+        value={isDisabled}
+        onChange={(e) => setIsDisabled(e.target.checked)}
+      />
     </form>
   );
 }

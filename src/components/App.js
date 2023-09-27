@@ -6,10 +6,20 @@ import Stats from "./Stats";
 
 export default function App() {
   const [items, setItems] = useState([]);
+  const [sumItems, setSumItems] = useState(0);
+
+  // uradi za domaci
+
+  function summItems() {
+    let suma = 0;
+    items.map((item) => {
+      suma += item.quantity;
+    });
+    setSumItems(suma);
+    return suma;
+  }
 
   function handleAddItems(item) {
-    console.log(item, "ITEMS");
-    console.log(items[items.length - 1]?.description, "haah");
     setItems((items) => [...items, item]);
   }
 
@@ -33,12 +43,13 @@ export default function App() {
   return (
     <div className="app">
       <Logo />
-      <Form onAddItems={handleAddItems} />
+      <Form onAddItems={handleAddItems} items={items} />
       <PackingList
         items={items}
         onDeleteItem={handleDeleteItem}
         onToggleItem={handleToggleItem}
         onClearList={handleClearList}
+        sumItems={sumItems}
       />
       <Stats items={items} />
     </div>
